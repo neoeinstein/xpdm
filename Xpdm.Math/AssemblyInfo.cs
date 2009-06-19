@@ -32,10 +32,14 @@ using System.Runtime.CompilerServices;
 
 [assembly: AssemblyTitle("Xpdm.Math")]
 [assembly: AssemblyDescription("")]
-[assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+#if DEBUG
+[assembly: AssemblyConfiguration("Debug")]
+#else
+[assembly: AssemblyConfiguration("Release")]
+#endif
+[assembly: AssemblyCompany("xallaraparadigm")]
 [assembly: AssemblyProduct("")]
-[assembly: AssemblyCopyright("")]
+[assembly: AssemblyCopyright("2009 Marcus Griep and others")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
