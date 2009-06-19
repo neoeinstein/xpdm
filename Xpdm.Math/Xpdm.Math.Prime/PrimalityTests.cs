@@ -32,19 +32,9 @@ using System;
 
 namespace Xpdm.Math.Prime {
 
-#if INSIDE_CORLIB
-	internal
-#else
-	public
-#endif
-	delegate bool PrimalityTest (BigInteger bi, ConfidenceFactor confidence);
+	public delegate bool PrimalityTest (BigInteger bi, ConfidenceFactor confidence);
 
-#if INSIDE_CORLIB
-	internal
-#else
-	public
-#endif
-	sealed class PrimalityTests {
+	public sealed class PrimalityTests {
 
 		private PrimalityTests ()
 		{

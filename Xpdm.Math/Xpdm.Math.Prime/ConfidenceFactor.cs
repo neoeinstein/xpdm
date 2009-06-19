@@ -34,12 +34,7 @@ namespace Xpdm.Math.Prime {
 	/// <summary>
 	/// A factor of confidence.
 	/// </summary>
-#if INSIDE_CORLIB
-	internal
-#else
-	public
-#endif
-	enum ConfidenceFactor {
+	public enum ConfidenceFactor {
 		/// <summary>
 		/// Only suitable for development use, probability of failure may be greater than 1/2^20.
 		/// </summary>

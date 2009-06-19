@@ -42,12 +42,7 @@ using Xpdm.Math.Prime;
 
 namespace Xpdm.Math {
 
-#if INSIDE_CORLIB
-	internal
-#else
-	public
-#endif
-	class BigInteger {
+	public class BigInteger {
 
 		#region Data Storage
 
@@ -173,9 +168,7 @@ namespace Xpdm.Math {
 			this.length = DEFAULT_LEN;
 		}
 
-#if !INSIDE_CORLIB
 		[CLSCompliant (false)]
-#endif          
 		public BigInteger (Sign sign, uint len) 
 		{
 			this.data = new uint [len];
@@ -188,9 +181,7 @@ namespace Xpdm.Math {
 			this.length = bi.length;
 		}
 
-#if !INSIDE_CORLIB
 		[CLSCompliant (false)]
-#endif       
 		public BigInteger (BigInteger bi, uint len)
 		{
 
@@ -234,9 +225,7 @@ namespace Xpdm.Math {
 			this.Normalize ();
 		}
 
-#if !INSIDE_CORLIB
 		[CLSCompliant (false)]
-#endif 
 		public BigInteger (uint [] inData)
 		{
 			length = (uint)inData.Length;
@@ -249,17 +238,13 @@ namespace Xpdm.Math {
 			this.Normalize ();
 		}
 
-#if !INSIDE_CORLIB
 		[CLSCompliant (false)]
-#endif 
 		public BigInteger (uint ui)
 		{
 			data = new uint [] {ui};
 		}
 
-#if !INSIDE_CORLIB
 		[CLSCompliant (false)]
-#endif 
 		public BigInteger (ulong ul)
 		{
 			data = new uint [2] { (uint)ul, (uint)(ul >> 32)};
@@ -268,9 +253,7 @@ namespace Xpdm.Math {
 			this.Normalize ();
 		}
 
-#if !INSIDE_CORLIB
 		[CLSCompliant (false)]
-#endif 
 		public static implicit operator BigInteger (uint value)
 		{
 			return (new BigInteger (value));
@@ -282,9 +265,7 @@ namespace Xpdm.Math {
 			return (new BigInteger ((uint)value));
 		}
 
-#if !INSIDE_CORLIB
 		[CLSCompliant (false)]
-#endif 
 		public static implicit operator BigInteger (ulong value)
 		{
 			return (new BigInteger (value));
@@ -380,9 +361,7 @@ namespace Xpdm.Math {
 				return -(int)Kernel.DwordMod (bi, (uint)-i);
 		}
 
-#if !INSIDE_CORLIB
 		[CLSCompliant (false)]
-#endif 
 		public static uint operator % (BigInteger bi, uint ui)
 		{
 			return Kernel.DwordMod (bi, (uint)ui);
@@ -464,9 +443,7 @@ namespace Xpdm.Math {
 			return (bi % i);
 		}
 
-#if !INSIDE_CORLIB
 		[CLSCompliant (false)]
-#endif 
 		public static uint Modulus (BigInteger bi, uint ui) 
 		{
 			return (bi % ui);
@@ -622,9 +599,7 @@ namespace Xpdm.Math {
 		/// </summary>
 		/// <param name="bitNum">The bit to test. The least significant bit is 0.</param>
 		/// <returns>True if bitNum is set to 1, else false.</returns>
-#if !INSIDE_CORLIB
 		[CLSCompliant (false)]
-#endif 
 		public bool TestBit (uint bitNum)
 		{
 			uint bytePos = bitNum >> 5;             // divide by 32
@@ -645,25 +620,19 @@ namespace Xpdm.Math {
 			return ((this.data [bytePos] | mask) == this.data [bytePos]);
 		}
 
-#if !INSIDE_CORLIB
 		[CLSCompliant (false)]
-#endif 
 		public void SetBit (uint bitNum)
 		{
 			SetBit (bitNum, true);
 		}
 
-#if !INSIDE_CORLIB
 		[CLSCompliant (false)]
-#endif 
 		public void ClearBit (uint bitNum)
 		{
 			SetBit (bitNum, false);
 		}
 
-#if !INSIDE_CORLIB
 		[CLSCompliant (false)]
-#endif 
 		public void SetBit (uint bitNum, bool value)
 		{
 			uint bytePos = bitNum >> 5;             // divide by 32
@@ -716,18 +685,14 @@ namespace Xpdm.Math {
 
 		#region Compare
 
-#if !INSIDE_CORLIB
 		[CLSCompliant (false)]
-#endif 
 		public static bool operator == (BigInteger bi1, uint ui)
 		{
 			if (bi1.length != 1) bi1.Normalize ();
 			return bi1.length == 1 && bi1.data [0] == ui;
 		}
 
-#if !INSIDE_CORLIB
 		[CLSCompliant (false)]
-#endif 
 		public static bool operator != (BigInteger bi1, uint ui)
 		{
 			if (bi1.length != 1) bi1.Normalize ();
@@ -783,17 +748,13 @@ namespace Xpdm.Math {
 
 		#region Formatting
 
-#if !INSIDE_CORLIB
 		[CLSCompliant (false)]
-#endif 
 		public string ToString (uint radix)
 		{
 			return ToString (radix, "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ");
 		}
 
-#if !INSIDE_CORLIB
 		[CLSCompliant (false)]
-#endif 
 		public string ToString (uint radix, string characterSet)
 		{
 			if (characterSet.Length < radix)
@@ -967,12 +928,7 @@ namespace Xpdm.Math {
 
 		#endregion
 
-#if INSIDE_CORLIB
-		internal
-#else
-		public
-#endif
-		sealed class ModulusRing {
+		public sealed class ModulusRing {
 
 			BigInteger mod, constant;
 
@@ -1183,9 +1139,7 @@ namespace Xpdm.Math {
 
 			// TODO: Make tests for this, not really needed b/c prime stuff
 			// checks it, but still would be nice
-#if !INSIDE_CORLIB
                         [CLSCompliant (false)]
-#endif 
 #if true
 			public BigInteger Pow (uint b, BigInteger exp)
 			{
@@ -1636,12 +1590,11 @@ namespace Xpdm.Math {
 
 				return A;
 			}
-#if _NOT_USED_
+
 			public static BigInteger Reduce (BigInteger n, BigInteger m)
 			{
 				return Reduce (n, m, Inverse (m.data [0]));
 			}
-#endif
 		}
 
 		/// <summary>

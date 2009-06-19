@@ -32,12 +32,7 @@ using System;
 
 namespace Xpdm.Math.Prime.Generator {
 
-#if INSIDE_CORLIB
-	internal
-#else
-	public
-#endif
-	abstract class PrimeGeneratorBase {
+	public abstract class PrimeGeneratorBase {
 
 		public virtual ConfidenceFactor Confidence {
 			get {

@@ -29,12 +29,7 @@
 
 namespace Xpdm.Math.Prime.Generator {
 
-#if INSIDE_CORLIB
-	internal
-#else
-	public
-#endif
-	class SequentialSearchPrimeGeneratorBase : PrimeGeneratorBase {
+	public class SequentialSearchPrimeGeneratorBase : PrimeGeneratorBase {
 
 		protected virtual BigInteger GenerateSearchBase (int bits, object context)
 		{
