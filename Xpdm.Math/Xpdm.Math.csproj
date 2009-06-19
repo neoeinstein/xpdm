@@ -32,6 +32,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="Xpdm.Math\BigInteger.cs" />
+    <Compile Include="Xpdm.Math.Prime\ConfidenceFactor.cs" />
+    <Compile Include="Xpdm.Math.Prime\PrimalityTests.cs" />
+    <Compile Include="Xpdm.Math.Prime.Generator\NextPrimeFinder.cs" />
+    <Compile Include="Xpdm.Math.Prime.Generator\PrimeGeneratorBase.cs" />
+    <Compile Include="Xpdm.Math.Prime.Generator\SequentialSearchPrimeGeneratorBase.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
