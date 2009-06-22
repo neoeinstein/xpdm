@@ -39,7 +39,7 @@
     <Compile Include="Xpdm.Math\BigIntegerTestSet.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Xpdm.Math\Xpdm.Math.csproj">
+    <ProjectReference Include="..\Xpdm.Math.csproj">
       <Project>{F5F294EB-255B-422B-8534-0BD1113A9727}</Project>
       <Name>Xpdm.Math</Name>
     </ProjectReference>

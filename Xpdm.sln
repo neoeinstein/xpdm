@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 9.00
 # Visual Studio 2005
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xpdm.Math", "Xpdm.Math\Xpdm.Math.csproj", "{F5F294EB-255B-422B-8534-0BD1113A9727}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xpdm.Math.Tests.FromMono", "Xpdm.Math.Tests.FromMono\Xpdm.Math.Tests.FromMono.csproj", "{0F1618BF-982B-4444-AA63-D809F300E6DA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xpdm.Math.Tests.FromMono", "Xpdm.Math\Tests.FromMono\Xpdm.Math.Tests.FromMono.csproj", "{0F1618BF-982B-4444-AA63-D809F300E6DA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
