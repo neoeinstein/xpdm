@@ -7,7 +7,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{0F1618BF-982B-4444-AA63-D809F300E6DA}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <AssemblyName>Xpdm.Math.Tests</AssemblyName>
+    <AssemblyName>Xpdm.Math.Tests.FromMono</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -34,6 +34,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="Xpdm.Math\BigIntegerTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Xpdm.Math\Xpdm.Math.csproj">
