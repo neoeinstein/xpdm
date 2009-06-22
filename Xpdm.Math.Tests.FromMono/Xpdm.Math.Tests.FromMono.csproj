@@ -35,6 +35,8 @@
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Xpdm.Math\BigIntegerTest.cs" />
+    <Compile Include="Xpdm.Math\BigIntegerTest.Arithmetic.cs" />
+    <Compile Include="Xpdm.Math\BigIntegerTestSet.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Xpdm.Math\Xpdm.Math.csproj">
