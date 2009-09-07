@@ -26,7 +26,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 using System;
 using System.Security.Cryptography;
 
-namespace SkeinFish
+namespace Xpdm.Security.Cryptography
 {
     public class Skein : HashAlgorithm
     {

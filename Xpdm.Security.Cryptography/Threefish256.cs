@@ -25,7 +25,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 using System;
 
-namespace SkeinFish
+namespace Xpdm.Security.Cryptography
 {
     internal class Threefish256 : ThreefishCipher
     {

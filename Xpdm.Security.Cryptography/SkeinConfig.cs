@@ -2,7 +2,7 @@
 using System.Text;
 using System.Security.Cryptography;
 
-namespace SkeinFish
+namespace Xpdm.Security.Cryptography
 {
     public class SkeinConfig
     {

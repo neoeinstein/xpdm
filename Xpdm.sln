@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xpdm.Math", "Xpdm.Math\Xpdm
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xpdm.Math.Tests.FromMono", "Xpdm.Math\Tests.FromMono\Xpdm.Math.Tests.FromMono.csproj", "{0F1618BF-982B-4444-AA63-D809F300E6DA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xpdm.Security.Cryptography", "Xpdm.Security.Cryptography\Xpdm.Security.Cryptography.csproj", "{6EEBB780-A354-4D25-9DE2-44383935D109}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{0F1618BF-982B-4444-AA63-D809F300E6DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0F1618BF-982B-4444-AA63-D809F300E6DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0F1618BF-982B-4444-AA63-D809F300E6DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6EEBB780-A354-4D25-9DE2-44383935D109}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6EEBB780-A354-4D25-9DE2-44383935D109}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6EEBB780-A354-4D25-9DE2-44383935D109}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6EEBB780-A354-4D25-9DE2-44383935D109}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F5F294EB-255B-422B-8534-0BD1113A9727}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F5F294EB-255B-422B-8534-0BD1113A9727}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F5F294EB-255B-422B-8534-0BD1113A9727}.Release|Any CPU.ActiveCfg = Release|Any CPU
