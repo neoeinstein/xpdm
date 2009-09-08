@@ -29,6 +29,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="Mono.Simd, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\opt\mono\2.4\lib\mono\2.0\Mono.Simd.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Skein.cs" />
@@ -41,6 +46,13 @@
     <Compile Include="ThreefishTransform.cs" />
     <Compile Include="UBITweak.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Threefish256Simd.cs" />
+    <Compile Include="ThreefishCipherSimd.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ProjectExtensions>
+    <MonoDevelop>
+      <Properties InternalTargetFrameworkVersion="3.5" xmlns="" />
+    </MonoDevelop>
+  </ProjectExtensions>
 </Project>
