@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("SkeinFish")]
-[assembly: AssemblyDescription("An implementation of Skein and Threefish in C#")]
+[assembly: AssemblyTitle("Xpdm.Security.Cryptography")]
+[assembly: AssemblyDescription("Various cryptographic classes")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Alberto Fajardo")]
-[assembly: AssemblyProduct("SkeinFish")]
-[assembly: AssemblyCopyright("Copyright © Alberto Fajardo 2009")]
+[assembly: AssemblyCompany("Marcus Griep")]
+[assembly: AssemblyProduct("")]
+[assembly: AssemblyCopyright("Copyright © Marcus Griep 2009")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -32,5 +32,7 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("0.0.3.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyVersion("1.0.0.0")]
+[assembly: AssemblyFileVersion("0.0.1.0")]
+
+[assembly: InternalsVisibleTo("Xpdm.Security.Cryptography.Tests")]
