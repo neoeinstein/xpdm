@@ -45,10 +45,10 @@ namespace Xpdm.Security.Cryptography
         public override void Encrypt(ulong[] input, ulong[] output)
         {
 			// Align the stack to a 16-byte boundary
-			ulong z = 0;
+			ulong z;
 			// Cache the block and key schedule
-			Vector2ul bZero = new Vector2ul(z),
-				      bOne = new Vector2ul(0, 1);
+			Vector2ul bZero = new Vector2ul(0),
+				      bOne = Vector2ul.LoadAligned(ref bZero);
 			Vector2ul bA = Vector2ul.LoadAligned(ref bZero),
 				      bB = Vector2ul.LoadAligned(ref bZero),
 				      bTempA = Vector2ul.LoadAligned(ref bZero),
@@ -64,6 +64,7 @@ namespace Xpdm.Security.Cryptography
 				      t1l = (Vector2ul) (((Vector4ui) Vector2ul.LoadAligned(ref t1h)).Shuffle(XYZWtoZWXY)),
 				      t2h = new Vector2ul(m_ExpandedTweak[2], 0),
 				      t2l = (Vector2ul) (((Vector4ui) Vector2ul.LoadAligned(ref t2h)).Shuffle(XYZWtoZWXY));
+			bOne.Y = 1;
 			Vector2ul subkey = Vector2ul.LoadAligned(ref bOne);
 
 			if (input.IsAligned(0))
