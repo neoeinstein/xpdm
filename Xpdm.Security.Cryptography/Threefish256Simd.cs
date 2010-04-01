@@ -36,6 +36,15 @@ namespace Xpdm.Security.Cryptography
 		const int SUBKEY_COUNT = NUM_ROUNDS / 4 + 1;
 		const ShuffleSel XYZWtoZWXY = ShuffleSel.XFromZ | ShuffleSel.YFromW | ShuffleSel.ZFromX | ShuffleSel.WFromY;
 
+		const int per00 = 14, per01 = 16,
+				  per10 = 52, per11 = 57,
+				  per20 = 23, per21 = 40,
+				  per30 =  5, per31 = 37,
+				  per40 = 25, per41 = 33,
+				  per50 = 46, per51 = 12,
+				  per60 = 58, per61 = 22,
+				  per70 = 32, per71 = 32;
+		
         public Threefish256Simd()
         {
             // Create the expanded key array
@@ -85,8 +94,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bB) + Vector2ul.LoadAligned(ref bA) + Vector2ul.LoadAligned(ref k0) + Vector2ul.LoadAligned(ref t1l));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << 56 | Vector2ul.LoadAligned(ref bTempB) >> (64 - 56));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) <<  5 | Vector2ul.LoadAligned(ref bTempA) >> (64 -  5));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << per01 | Vector2ul.LoadAligned(ref bTempB) >> (64 - per01));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << per00 | Vector2ul.LoadAligned(ref bTempA) >> (64 - per00));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bB, (Vector2ul) (((Vector4ui) Vector2ul.LoadAligned(ref bB)).Shuffle(XYZWtoZWXY)));
@@ -94,8 +103,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bB) + Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << 28 | Vector2ul.LoadAligned(ref bTempB) >> (64 - 28));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << 36 | Vector2ul.LoadAligned(ref bTempA) >> (64 - 36));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << per11 | Vector2ul.LoadAligned(ref bTempB) >> (64 - per11));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << per10 | Vector2ul.LoadAligned(ref bTempA) >> (64 - per10));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bB, (Vector2ul) (((Vector4ui) Vector2ul.LoadAligned(ref bB)).Shuffle(XYZWtoZWXY)));
@@ -103,8 +112,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bB) + Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << 46 | Vector2ul.LoadAligned(ref bTempB) >> (64 - 46));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << 13 | Vector2ul.LoadAligned(ref bTempA) >> (64 - 13));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << per21 | Vector2ul.LoadAligned(ref bTempB) >> (64 - per21));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << per20 | Vector2ul.LoadAligned(ref bTempA) >> (64 - per20));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bB, (Vector2ul) (((Vector4ui) Vector2ul.LoadAligned(ref bB)).Shuffle(XYZWtoZWXY)));
@@ -112,8 +121,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bB) + Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << 44 | Vector2ul.LoadAligned(ref bTempB) >> (64 - 44));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << 58 | Vector2ul.LoadAligned(ref bTempA) >> (64 - 58));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << per31 | Vector2ul.LoadAligned(ref bTempB) >> (64 - per31));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << per30 | Vector2ul.LoadAligned(ref bTempA) >> (64 - per30));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bB, (Vector2ul) (((Vector4ui) Vector2ul.LoadAligned(ref bB)).Shuffle(XYZWtoZWXY)));
@@ -123,8 +132,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bB) + Vector2ul.LoadAligned(ref bA) + Vector2ul.LoadAligned(ref k1) + Vector2ul.LoadAligned(ref t2l));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << 20 | Vector2ul.LoadAligned(ref bTempB) >> (64 - 20));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << 26 | Vector2ul.LoadAligned(ref bTempA) >> (64 - 26));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << per41 | Vector2ul.LoadAligned(ref bTempB) >> (64 - per41));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << per40 | Vector2ul.LoadAligned(ref bTempA) >> (64 - per40));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bB, (Vector2ul) (((Vector4ui) Vector2ul.LoadAligned(ref bB)).Shuffle(XYZWtoZWXY)));
@@ -132,8 +141,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bB) + Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << 35 | Vector2ul.LoadAligned(ref bTempB) >> (64 - 35));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << 53 | Vector2ul.LoadAligned(ref bTempA) >> (64 - 53));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << per51 | Vector2ul.LoadAligned(ref bTempB) >> (64 - per51));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << per50 | Vector2ul.LoadAligned(ref bTempA) >> (64 - per50));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bB, (Vector2ul) (((Vector4ui) Vector2ul.LoadAligned(ref bB)).Shuffle(XYZWtoZWXY)));
@@ -141,8 +150,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bB) + Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << 42 | Vector2ul.LoadAligned(ref bTempB) >> (64 - 42));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << 11 | Vector2ul.LoadAligned(ref bTempA) >> (64 - 11));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << per61 | Vector2ul.LoadAligned(ref bTempB) >> (64 - per61));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << per60 | Vector2ul.LoadAligned(ref bTempA) >> (64 - per60));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bB, (Vector2ul) (((Vector4ui) Vector2ul.LoadAligned(ref bB)).Shuffle(XYZWtoZWXY)));
@@ -150,8 +159,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bB) + Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << 50 | Vector2ul.LoadAligned(ref bTempB) >> (64 - 50));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << 59 | Vector2ul.LoadAligned(ref bTempA) >> (64 - 59));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << per71 | Vector2ul.LoadAligned(ref bTempB) >> (64 - per71));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << per70 | Vector2ul.LoadAligned(ref bTempA) >> (64 - per70));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bB, (Vector2ul) (((Vector4ui) Vector2ul.LoadAligned(ref bB)).Shuffle(XYZWtoZWXY)));
@@ -162,8 +171,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bB) + Vector2ul.LoadAligned(ref bA) + Vector2ul.LoadAligned(ref k2) + Vector2ul.LoadAligned(ref t0l));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << 56 | Vector2ul.LoadAligned(ref bTempB) >> (64 - 56));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) <<  5 | Vector2ul.LoadAligned(ref bTempA) >> (64 -  5));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << per01 | Vector2ul.LoadAligned(ref bTempB) >> (64 - per01));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << per00 | Vector2ul.LoadAligned(ref bTempA) >> (64 - per00));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bB, (Vector2ul) (((Vector4ui) Vector2ul.LoadAligned(ref bB)).Shuffle(XYZWtoZWXY)));
@@ -171,8 +180,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bB) + Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << 28 | Vector2ul.LoadAligned(ref bTempB) >> (64 - 28));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << 36 | Vector2ul.LoadAligned(ref bTempA) >> (64 - 36));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << per11 | Vector2ul.LoadAligned(ref bTempB) >> (64 - per11));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << per10 | Vector2ul.LoadAligned(ref bTempA) >> (64 - per10));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bB, (Vector2ul) (((Vector4ui) Vector2ul.LoadAligned(ref bB)).Shuffle(XYZWtoZWXY)));
@@ -180,8 +189,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bB) + Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << 46 | Vector2ul.LoadAligned(ref bTempB) >> (64 - 46));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << 13 | Vector2ul.LoadAligned(ref bTempA) >> (64 - 13));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << per21 | Vector2ul.LoadAligned(ref bTempB) >> (64 - per21));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << per20 | Vector2ul.LoadAligned(ref bTempA) >> (64 - per20));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bB, (Vector2ul) (((Vector4ui) Vector2ul.LoadAligned(ref bB)).Shuffle(XYZWtoZWXY)));
@@ -189,8 +198,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bB) + Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << 44 | Vector2ul.LoadAligned(ref bTempB) >> (64 - 44));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << 58 | Vector2ul.LoadAligned(ref bTempA) >> (64 - 58));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << per31 | Vector2ul.LoadAligned(ref bTempB) >> (64 - per31));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << per30 | Vector2ul.LoadAligned(ref bTempA) >> (64 - per30));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bB, (Vector2ul) (((Vector4ui) Vector2ul.LoadAligned(ref bB)).Shuffle(XYZWtoZWXY)));
@@ -201,8 +210,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bB) + Vector2ul.LoadAligned(ref bA) + Vector2ul.LoadAligned(ref k3) + Vector2ul.LoadAligned(ref t1l));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << 20 | Vector2ul.LoadAligned(ref bTempB) >> (64 - 20));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << 26 | Vector2ul.LoadAligned(ref bTempA) >> (64 - 26));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << per41 | Vector2ul.LoadAligned(ref bTempB) >> (64 - per41));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << per40 | Vector2ul.LoadAligned(ref bTempA) >> (64 - per40));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bB, (Vector2ul) (((Vector4ui) Vector2ul.LoadAligned(ref bB)).Shuffle(XYZWtoZWXY)));
@@ -210,8 +219,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bB) + Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << 35 | Vector2ul.LoadAligned(ref bTempB) >> (64 - 35));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << 53 | Vector2ul.LoadAligned(ref bTempA) >> (64 - 53));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << per51 | Vector2ul.LoadAligned(ref bTempB) >> (64 - per51));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << per50 | Vector2ul.LoadAligned(ref bTempA) >> (64 - per50));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bB, (Vector2ul) (((Vector4ui) Vector2ul.LoadAligned(ref bB)).Shuffle(XYZWtoZWXY)));
@@ -219,8 +228,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bB) + Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << 42 | Vector2ul.LoadAligned(ref bTempB) >> (64 - 42));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << 11 | Vector2ul.LoadAligned(ref bTempA) >> (64 - 11));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << per61 | Vector2ul.LoadAligned(ref bTempB) >> (64 - per61));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << per60 | Vector2ul.LoadAligned(ref bTempA) >> (64 - per60));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bB, (Vector2ul) (((Vector4ui) Vector2ul.LoadAligned(ref bB)).Shuffle(XYZWtoZWXY)));
@@ -228,8 +237,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bB) + Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << 50 | Vector2ul.LoadAligned(ref bTempB) >> (64 - 50));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << 59 | Vector2ul.LoadAligned(ref bTempA) >> (64 - 59));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << per71 | Vector2ul.LoadAligned(ref bTempB) >> (64 - per71));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << per70 | Vector2ul.LoadAligned(ref bTempA) >> (64 - per70));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bB, (Vector2ul) (((Vector4ui) Vector2ul.LoadAligned(ref bB)).Shuffle(XYZWtoZWXY)));
@@ -240,8 +249,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bB) + Vector2ul.LoadAligned(ref bA) + Vector2ul.LoadAligned(ref k4) + Vector2ul.LoadAligned(ref t2l));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << 56 | Vector2ul.LoadAligned(ref bTempB) >> (64 - 56));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) <<  5 | Vector2ul.LoadAligned(ref bTempA) >> (64 -  5));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << per01 | Vector2ul.LoadAligned(ref bTempB) >> (64 - per01));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << per00 | Vector2ul.LoadAligned(ref bTempA) >> (64 - per00));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bB, (Vector2ul) (((Vector4ui) Vector2ul.LoadAligned(ref bB)).Shuffle(XYZWtoZWXY)));
@@ -249,8 +258,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bB) + Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << 28 | Vector2ul.LoadAligned(ref bTempB) >> (64 - 28));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << 36 | Vector2ul.LoadAligned(ref bTempA) >> (64 - 36));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << per11 | Vector2ul.LoadAligned(ref bTempB) >> (64 - per11));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << per10 | Vector2ul.LoadAligned(ref bTempA) >> (64 - per10));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bB, (Vector2ul) (((Vector4ui) Vector2ul.LoadAligned(ref bB)).Shuffle(XYZWtoZWXY)));
@@ -258,8 +267,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bB) + Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << 46 | Vector2ul.LoadAligned(ref bTempB) >> (64 - 46));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << 13 | Vector2ul.LoadAligned(ref bTempA) >> (64 - 13));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << per21 | Vector2ul.LoadAligned(ref bTempB) >> (64 - per21));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << per20 | Vector2ul.LoadAligned(ref bTempA) >> (64 - per20));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bB, (Vector2ul) (((Vector4ui) Vector2ul.LoadAligned(ref bB)).Shuffle(XYZWtoZWXY)));
@@ -267,8 +276,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bB) + Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << 44 | Vector2ul.LoadAligned(ref bTempB) >> (64 - 44));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << 58 | Vector2ul.LoadAligned(ref bTempA) >> (64 - 58));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << per31 | Vector2ul.LoadAligned(ref bTempB) >> (64 - per31));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << per30 | Vector2ul.LoadAligned(ref bTempA) >> (64 - per30));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bB, (Vector2ul) (((Vector4ui) Vector2ul.LoadAligned(ref bB)).Shuffle(XYZWtoZWXY)));
@@ -279,8 +288,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bB) + Vector2ul.LoadAligned(ref bA) + Vector2ul.LoadAligned(ref k0) + Vector2ul.LoadAligned(ref t0l));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << 20 | Vector2ul.LoadAligned(ref bTempB) >> (64 - 20));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << 26 | Vector2ul.LoadAligned(ref bTempA) >> (64 - 26));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << per41 | Vector2ul.LoadAligned(ref bTempB) >> (64 - per41));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << per40 | Vector2ul.LoadAligned(ref bTempA) >> (64 - per40));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bB, (Vector2ul) (((Vector4ui) Vector2ul.LoadAligned(ref bB)).Shuffle(XYZWtoZWXY)));
@@ -288,8 +297,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bB) + Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << 35 | Vector2ul.LoadAligned(ref bTempB) >> (64 - 35));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << 53 | Vector2ul.LoadAligned(ref bTempA) >> (64 - 53));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << per51 | Vector2ul.LoadAligned(ref bTempB) >> (64 - per51));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << per50 | Vector2ul.LoadAligned(ref bTempA) >> (64 - per50));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bB, (Vector2ul) (((Vector4ui) Vector2ul.LoadAligned(ref bB)).Shuffle(XYZWtoZWXY)));
@@ -297,8 +306,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bB) + Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << 42 | Vector2ul.LoadAligned(ref bTempB) >> (64 - 42));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << 11 | Vector2ul.LoadAligned(ref bTempA) >> (64 - 11));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << per61 | Vector2ul.LoadAligned(ref bTempB) >> (64 - per61));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << per60 | Vector2ul.LoadAligned(ref bTempA) >> (64 - per60));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bB, (Vector2ul) (((Vector4ui) Vector2ul.LoadAligned(ref bB)).Shuffle(XYZWtoZWXY)));
@@ -306,8 +315,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bB) + Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << 50 | Vector2ul.LoadAligned(ref bTempB) >> (64 - 50));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << 59 | Vector2ul.LoadAligned(ref bTempA) >> (64 - 59));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << per71 | Vector2ul.LoadAligned(ref bTempB) >> (64 - per71));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << per70 | Vector2ul.LoadAligned(ref bTempA) >> (64 - per70));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bB, (Vector2ul) (((Vector4ui) Vector2ul.LoadAligned(ref bB)).Shuffle(XYZWtoZWXY)));
@@ -318,8 +327,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bB) + Vector2ul.LoadAligned(ref bA) + Vector2ul.LoadAligned(ref k1) + Vector2ul.LoadAligned(ref t1l));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << 56 | Vector2ul.LoadAligned(ref bTempB) >> (64 - 56));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) <<  5 | Vector2ul.LoadAligned(ref bTempA) >> (64 -  5));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << per01 | Vector2ul.LoadAligned(ref bTempB) >> (64 - per01));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << per00 | Vector2ul.LoadAligned(ref bTempA) >> (64 - per00));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bB, (Vector2ul) (((Vector4ui) Vector2ul.LoadAligned(ref bB)).Shuffle(XYZWtoZWXY)));
@@ -327,8 +336,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bB) + Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << 28 | Vector2ul.LoadAligned(ref bTempB) >> (64 - 28));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << 36 | Vector2ul.LoadAligned(ref bTempA) >> (64 - 36));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << per11 | Vector2ul.LoadAligned(ref bTempB) >> (64 - per11));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << per10 | Vector2ul.LoadAligned(ref bTempA) >> (64 - per10));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bB, (Vector2ul) (((Vector4ui) Vector2ul.LoadAligned(ref bB)).Shuffle(XYZWtoZWXY)));
@@ -336,8 +345,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bB) + Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << 46 | Vector2ul.LoadAligned(ref bTempB) >> (64 - 46));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << 13 | Vector2ul.LoadAligned(ref bTempA) >> (64 - 13));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << per21 | Vector2ul.LoadAligned(ref bTempB) >> (64 - per21));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << per20 | Vector2ul.LoadAligned(ref bTempA) >> (64 - per20));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bB, (Vector2ul) (((Vector4ui) Vector2ul.LoadAligned(ref bB)).Shuffle(XYZWtoZWXY)));
@@ -345,8 +354,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bB) + Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << 44 | Vector2ul.LoadAligned(ref bTempB) >> (64 - 44));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << 58 | Vector2ul.LoadAligned(ref bTempA) >> (64 - 58));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << per31 | Vector2ul.LoadAligned(ref bTempB) >> (64 - per31));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << per30 | Vector2ul.LoadAligned(ref bTempA) >> (64 - per30));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bB, (Vector2ul) (((Vector4ui) Vector2ul.LoadAligned(ref bB)).Shuffle(XYZWtoZWXY)));
@@ -357,8 +366,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bB) + Vector2ul.LoadAligned(ref bA) + Vector2ul.LoadAligned(ref k2) + Vector2ul.LoadAligned(ref t2l));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << 20 | Vector2ul.LoadAligned(ref bTempB) >> (64 - 20));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << 26 | Vector2ul.LoadAligned(ref bTempA) >> (64 - 26));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << per41 | Vector2ul.LoadAligned(ref bTempB) >> (64 - per41));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << per40 | Vector2ul.LoadAligned(ref bTempA) >> (64 - per40));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bB, (Vector2ul) (((Vector4ui) Vector2ul.LoadAligned(ref bB)).Shuffle(XYZWtoZWXY)));
@@ -366,8 +375,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bB) + Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << 35 | Vector2ul.LoadAligned(ref bTempB) >> (64 - 35));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << 53 | Vector2ul.LoadAligned(ref bTempA) >> (64 - 53));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << per51 | Vector2ul.LoadAligned(ref bTempB) >> (64 - per51));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << per50 | Vector2ul.LoadAligned(ref bTempA) >> (64 - per50));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bB, (Vector2ul) (((Vector4ui) Vector2ul.LoadAligned(ref bB)).Shuffle(XYZWtoZWXY)));
@@ -375,8 +384,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bB) + Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << 42 | Vector2ul.LoadAligned(ref bTempB) >> (64 - 42));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << 11 | Vector2ul.LoadAligned(ref bTempA) >> (64 - 11));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << per61 | Vector2ul.LoadAligned(ref bTempB) >> (64 - per61));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << per60 | Vector2ul.LoadAligned(ref bTempA) >> (64 - per60));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bB, (Vector2ul) (((Vector4ui) Vector2ul.LoadAligned(ref bB)).Shuffle(XYZWtoZWXY)));
@@ -384,8 +393,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bB) + Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << 50 | Vector2ul.LoadAligned(ref bTempB) >> (64 - 50));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << 59 | Vector2ul.LoadAligned(ref bTempA) >> (64 - 59));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << per71 | Vector2ul.LoadAligned(ref bTempB) >> (64 - per71));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << per70 | Vector2ul.LoadAligned(ref bTempA) >> (64 - per70));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bB, (Vector2ul) (((Vector4ui) Vector2ul.LoadAligned(ref bB)).Shuffle(XYZWtoZWXY)));
@@ -396,8 +405,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bB) + Vector2ul.LoadAligned(ref bA) + Vector2ul.LoadAligned(ref k3) + Vector2ul.LoadAligned(ref t0l));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << 56 | Vector2ul.LoadAligned(ref bTempB) >> (64 - 56));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) <<  5 | Vector2ul.LoadAligned(ref bTempA) >> (64 -  5));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << per01 | Vector2ul.LoadAligned(ref bTempB) >> (64 - per01));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << per00 | Vector2ul.LoadAligned(ref bTempA) >> (64 - per00));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bB, (Vector2ul) (((Vector4ui) Vector2ul.LoadAligned(ref bB)).Shuffle(XYZWtoZWXY)));
@@ -405,8 +414,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bB) + Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << 28 | Vector2ul.LoadAligned(ref bTempB) >> (64 - 28));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << 36 | Vector2ul.LoadAligned(ref bTempA) >> (64 - 36));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << per11 | Vector2ul.LoadAligned(ref bTempB) >> (64 - per11));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << per10 | Vector2ul.LoadAligned(ref bTempA) >> (64 - per10));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bB, (Vector2ul) (((Vector4ui) Vector2ul.LoadAligned(ref bB)).Shuffle(XYZWtoZWXY)));
@@ -414,8 +423,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bB) + Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << 46 | Vector2ul.LoadAligned(ref bTempB) >> (64 - 46));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << 13 | Vector2ul.LoadAligned(ref bTempA) >> (64 - 13));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << per21 | Vector2ul.LoadAligned(ref bTempB) >> (64 - per21));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << per20 | Vector2ul.LoadAligned(ref bTempA) >> (64 - per20));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bB, (Vector2ul) (((Vector4ui) Vector2ul.LoadAligned(ref bB)).Shuffle(XYZWtoZWXY)));
@@ -423,8 +432,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bB) + Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << 44 | Vector2ul.LoadAligned(ref bTempB) >> (64 - 44));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << 58 | Vector2ul.LoadAligned(ref bTempA) >> (64 - 58));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << per31 | Vector2ul.LoadAligned(ref bTempB) >> (64 - per31));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << per30 | Vector2ul.LoadAligned(ref bTempA) >> (64 - per30));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bB, (Vector2ul) (((Vector4ui) Vector2ul.LoadAligned(ref bB)).Shuffle(XYZWtoZWXY)));
@@ -435,8 +444,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bB) + Vector2ul.LoadAligned(ref bA) + Vector2ul.LoadAligned(ref k4) + Vector2ul.LoadAligned(ref t1l));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << 20 | Vector2ul.LoadAligned(ref bTempB) >> (64 - 20));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << 26 | Vector2ul.LoadAligned(ref bTempA) >> (64 - 26));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << per41 | Vector2ul.LoadAligned(ref bTempB) >> (64 - per41));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << per40 | Vector2ul.LoadAligned(ref bTempA) >> (64 - per40));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bB, (Vector2ul) (((Vector4ui) Vector2ul.LoadAligned(ref bB)).Shuffle(XYZWtoZWXY)));
@@ -444,8 +453,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bB) + Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << 35 | Vector2ul.LoadAligned(ref bTempB) >> (64 - 35));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << 53 | Vector2ul.LoadAligned(ref bTempA) >> (64 - 53));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << per51 | Vector2ul.LoadAligned(ref bTempB) >> (64 - per51));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << per50 | Vector2ul.LoadAligned(ref bTempA) >> (64 - per50));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bB, (Vector2ul) (((Vector4ui) Vector2ul.LoadAligned(ref bB)).Shuffle(XYZWtoZWXY)));
@@ -453,8 +462,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bB) + Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << 42 | Vector2ul.LoadAligned(ref bTempB) >> (64 - 42));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << 11 | Vector2ul.LoadAligned(ref bTempA) >> (64 - 11));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << per61 | Vector2ul.LoadAligned(ref bTempB) >> (64 - per61));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << per60 | Vector2ul.LoadAligned(ref bTempA) >> (64 - per60));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bB, (Vector2ul) (((Vector4ui) Vector2ul.LoadAligned(ref bB)).Shuffle(XYZWtoZWXY)));
@@ -462,8 +471,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bB) + Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << 50 | Vector2ul.LoadAligned(ref bTempB) >> (64 - 50));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << 59 | Vector2ul.LoadAligned(ref bTempA) >> (64 - 59));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << per71 | Vector2ul.LoadAligned(ref bTempB) >> (64 - per71));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << per70 | Vector2ul.LoadAligned(ref bTempA) >> (64 - per70));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bB, (Vector2ul) (((Vector4ui) Vector2ul.LoadAligned(ref bB)).Shuffle(XYZWtoZWXY)));
@@ -474,8 +483,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bB) + Vector2ul.LoadAligned(ref bA) + Vector2ul.LoadAligned(ref k0) + Vector2ul.LoadAligned(ref t2l));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << 56 | Vector2ul.LoadAligned(ref bTempB) >> (64 - 56));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) <<  5 | Vector2ul.LoadAligned(ref bTempA) >> (64 -  5));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << per01 | Vector2ul.LoadAligned(ref bTempB) >> (64 - per01));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << per00 | Vector2ul.LoadAligned(ref bTempA) >> (64 - per00));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bB, (Vector2ul) (((Vector4ui) Vector2ul.LoadAligned(ref bB)).Shuffle(XYZWtoZWXY)));
@@ -483,8 +492,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bB) + Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << 28 | Vector2ul.LoadAligned(ref bTempB) >> (64 - 28));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << 36 | Vector2ul.LoadAligned(ref bTempA) >> (64 - 36));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << per11 | Vector2ul.LoadAligned(ref bTempB) >> (64 - per11));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << per10 | Vector2ul.LoadAligned(ref bTempA) >> (64 - per10));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bB, (Vector2ul) (((Vector4ui) Vector2ul.LoadAligned(ref bB)).Shuffle(XYZWtoZWXY)));
@@ -492,8 +501,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bB) + Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << 46 | Vector2ul.LoadAligned(ref bTempB) >> (64 - 46));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << 13 | Vector2ul.LoadAligned(ref bTempA) >> (64 - 13));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << per21 | Vector2ul.LoadAligned(ref bTempB) >> (64 - per21));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << per20 | Vector2ul.LoadAligned(ref bTempA) >> (64 - per20));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bB, (Vector2ul) (((Vector4ui) Vector2ul.LoadAligned(ref bB)).Shuffle(XYZWtoZWXY)));
@@ -501,8 +510,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bB) + Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << 44 | Vector2ul.LoadAligned(ref bTempB) >> (64 - 44));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << 58 | Vector2ul.LoadAligned(ref bTempA) >> (64 - 58));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << per31 | Vector2ul.LoadAligned(ref bTempB) >> (64 - per31));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << per30 | Vector2ul.LoadAligned(ref bTempA) >> (64 - per30));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bB, (Vector2ul) (((Vector4ui) Vector2ul.LoadAligned(ref bB)).Shuffle(XYZWtoZWXY)));
@@ -513,8 +522,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bB) + Vector2ul.LoadAligned(ref bA) + Vector2ul.LoadAligned(ref k1) + Vector2ul.LoadAligned(ref t0l));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << 20 | Vector2ul.LoadAligned(ref bTempB) >> (64 - 20));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << 26 | Vector2ul.LoadAligned(ref bTempA) >> (64 - 26));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << per41 | Vector2ul.LoadAligned(ref bTempB) >> (64 - per41));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << per40 | Vector2ul.LoadAligned(ref bTempA) >> (64 - per40));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bB, (Vector2ul) (((Vector4ui) Vector2ul.LoadAligned(ref bB)).Shuffle(XYZWtoZWXY)));
@@ -522,8 +531,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bB) + Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << 35 | Vector2ul.LoadAligned(ref bTempB) >> (64 - 35));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << 53 | Vector2ul.LoadAligned(ref bTempA) >> (64 - 53));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << per51 | Vector2ul.LoadAligned(ref bTempB) >> (64 - per51));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << per50 | Vector2ul.LoadAligned(ref bTempA) >> (64 - per50));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bB, (Vector2ul) (((Vector4ui) Vector2ul.LoadAligned(ref bB)).Shuffle(XYZWtoZWXY)));
@@ -531,8 +540,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bB) + Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << 42 | Vector2ul.LoadAligned(ref bTempB) >> (64 - 42));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << 11 | Vector2ul.LoadAligned(ref bTempA) >> (64 - 11));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << per61 | Vector2ul.LoadAligned(ref bTempB) >> (64 - per61));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << per60 | Vector2ul.LoadAligned(ref bTempA) >> (64 - per60));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bB, (Vector2ul) (((Vector4ui) Vector2ul.LoadAligned(ref bB)).Shuffle(XYZWtoZWXY)));
@@ -540,8 +549,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bB) + Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << 50 | Vector2ul.LoadAligned(ref bTempB) >> (64 - 50));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << 59 | Vector2ul.LoadAligned(ref bTempA) >> (64 - 59));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << per71 | Vector2ul.LoadAligned(ref bTempB) >> (64 - per71));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << per70 | Vector2ul.LoadAligned(ref bTempA) >> (64 - per70));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bB, (Vector2ul) (((Vector4ui) Vector2ul.LoadAligned(ref bB)).Shuffle(XYZWtoZWXY)));
@@ -552,8 +561,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bB) + Vector2ul.LoadAligned(ref bA) + Vector2ul.LoadAligned(ref k2) + Vector2ul.LoadAligned(ref t1l));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << 56 | Vector2ul.LoadAligned(ref bTempB) >> (64 - 56));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) <<  5 | Vector2ul.LoadAligned(ref bTempA) >> (64 -  5));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << per01 | Vector2ul.LoadAligned(ref bTempB) >> (64 - per01));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << per00 | Vector2ul.LoadAligned(ref bTempA) >> (64 - per00));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bB, (Vector2ul) (((Vector4ui) Vector2ul.LoadAligned(ref bB)).Shuffle(XYZWtoZWXY)));
@@ -561,8 +570,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bB) + Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << 28 | Vector2ul.LoadAligned(ref bTempB) >> (64 - 28));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << 36 | Vector2ul.LoadAligned(ref bTempA) >> (64 - 36));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << per11 | Vector2ul.LoadAligned(ref bTempB) >> (64 - per11));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << per10 | Vector2ul.LoadAligned(ref bTempA) >> (64 - per10));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bB, (Vector2ul) (((Vector4ui) Vector2ul.LoadAligned(ref bB)).Shuffle(XYZWtoZWXY)));
@@ -570,8 +579,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bB) + Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << 46 | Vector2ul.LoadAligned(ref bTempB) >> (64 - 46));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << 13 | Vector2ul.LoadAligned(ref bTempA) >> (64 - 13));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << per21 | Vector2ul.LoadAligned(ref bTempB) >> (64 - per21));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << per20 | Vector2ul.LoadAligned(ref bTempA) >> (64 - per20));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bB, (Vector2ul) (((Vector4ui) Vector2ul.LoadAligned(ref bB)).Shuffle(XYZWtoZWXY)));
@@ -579,8 +588,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bB) + Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << 44 | Vector2ul.LoadAligned(ref bTempB) >> (64 - 44));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << 58 | Vector2ul.LoadAligned(ref bTempA) >> (64 - 58));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << per31 | Vector2ul.LoadAligned(ref bTempB) >> (64 - per31));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << per30 | Vector2ul.LoadAligned(ref bTempA) >> (64 - per30));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bB, (Vector2ul) (((Vector4ui) Vector2ul.LoadAligned(ref bB)).Shuffle(XYZWtoZWXY)));
@@ -591,8 +600,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bB) + Vector2ul.LoadAligned(ref bA) + Vector2ul.LoadAligned(ref k3) + Vector2ul.LoadAligned(ref t2l));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << 20 | Vector2ul.LoadAligned(ref bTempB) >> (64 - 20));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << 26 | Vector2ul.LoadAligned(ref bTempA) >> (64 - 26));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << per41 | Vector2ul.LoadAligned(ref bTempB) >> (64 - per41));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << per40 | Vector2ul.LoadAligned(ref bTempA) >> (64 - per40));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bB, (Vector2ul) (((Vector4ui) Vector2ul.LoadAligned(ref bB)).Shuffle(XYZWtoZWXY)));
@@ -600,8 +609,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bB) + Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << 35 | Vector2ul.LoadAligned(ref bTempB) >> (64 - 35));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << 53 | Vector2ul.LoadAligned(ref bTempA) >> (64 - 53));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << per51 | Vector2ul.LoadAligned(ref bTempB) >> (64 - per51));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << per50 | Vector2ul.LoadAligned(ref bTempA) >> (64 - per50));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bB, (Vector2ul) (((Vector4ui) Vector2ul.LoadAligned(ref bB)).Shuffle(XYZWtoZWXY)));
@@ -609,8 +618,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bB) + Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << 42 | Vector2ul.LoadAligned(ref bTempB) >> (64 - 42));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << 11 | Vector2ul.LoadAligned(ref bTempA) >> (64 - 11));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << per61 | Vector2ul.LoadAligned(ref bTempB) >> (64 - per61));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << per60 | Vector2ul.LoadAligned(ref bTempA) >> (64 - per60));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bB, (Vector2ul) (((Vector4ui) Vector2ul.LoadAligned(ref bB)).Shuffle(XYZWtoZWXY)));
@@ -618,8 +627,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bB) + Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << 50 | Vector2ul.LoadAligned(ref bTempB) >> (64 - 50));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << 59 | Vector2ul.LoadAligned(ref bTempA) >> (64 - 59));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << per71 | Vector2ul.LoadAligned(ref bTempB) >> (64 - per71));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << per70 | Vector2ul.LoadAligned(ref bTempA) >> (64 - per70));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bB, (Vector2ul) (((Vector4ui) Vector2ul.LoadAligned(ref bB)).Shuffle(XYZWtoZWXY)));
@@ -630,8 +639,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bB) + Vector2ul.LoadAligned(ref bA) + Vector2ul.LoadAligned(ref k4) + Vector2ul.LoadAligned(ref t0l));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << 56 | Vector2ul.LoadAligned(ref bTempB) >> (64 - 56));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) <<  5 | Vector2ul.LoadAligned(ref bTempA) >> (64 -  5));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << per01 | Vector2ul.LoadAligned(ref bTempB) >> (64 - per01));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << per00 | Vector2ul.LoadAligned(ref bTempA) >> (64 - per00));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bB, (Vector2ul) (((Vector4ui) Vector2ul.LoadAligned(ref bB)).Shuffle(XYZWtoZWXY)));
@@ -639,8 +648,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bB) + Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << 28 | Vector2ul.LoadAligned(ref bTempB) >> (64 - 28));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << 36 | Vector2ul.LoadAligned(ref bTempA) >> (64 - 36));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << per11 | Vector2ul.LoadAligned(ref bTempB) >> (64 - per11));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << per10 | Vector2ul.LoadAligned(ref bTempA) >> (64 - per10));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bB, (Vector2ul) (((Vector4ui) Vector2ul.LoadAligned(ref bB)).Shuffle(XYZWtoZWXY)));
@@ -648,8 +657,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bB) + Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << 46 | Vector2ul.LoadAligned(ref bTempB) >> (64 - 46));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << 13 | Vector2ul.LoadAligned(ref bTempA) >> (64 - 13));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << per21 | Vector2ul.LoadAligned(ref bTempB) >> (64 - per21));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << per20 | Vector2ul.LoadAligned(ref bTempA) >> (64 - per20));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bB, (Vector2ul) (((Vector4ui) Vector2ul.LoadAligned(ref bB)).Shuffle(XYZWtoZWXY)));
@@ -657,8 +666,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bB) + Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << 44 | Vector2ul.LoadAligned(ref bTempB) >> (64 - 44));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << 58 | Vector2ul.LoadAligned(ref bTempA) >> (64 - 58));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << per31 | Vector2ul.LoadAligned(ref bTempB) >> (64 - per31));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << per30 | Vector2ul.LoadAligned(ref bTempA) >> (64 - per30));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bB, (Vector2ul) (((Vector4ui) Vector2ul.LoadAligned(ref bB)).Shuffle(XYZWtoZWXY)));
@@ -669,8 +678,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bB) + Vector2ul.LoadAligned(ref bA) + Vector2ul.LoadAligned(ref k0) + Vector2ul.LoadAligned(ref t1l));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << 20 | Vector2ul.LoadAligned(ref bTempB) >> (64 - 20));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << 26 | Vector2ul.LoadAligned(ref bTempA) >> (64 - 26));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << per41 | Vector2ul.LoadAligned(ref bTempB) >> (64 - per41));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << per40 | Vector2ul.LoadAligned(ref bTempA) >> (64 - per40));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bB, (Vector2ul) (((Vector4ui) Vector2ul.LoadAligned(ref bB)).Shuffle(XYZWtoZWXY)));
@@ -678,8 +687,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bB) + Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << 35 | Vector2ul.LoadAligned(ref bTempB) >> (64 - 35));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << 53 | Vector2ul.LoadAligned(ref bTempA) >> (64 - 53));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << per51 | Vector2ul.LoadAligned(ref bTempB) >> (64 - per51));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << per50 | Vector2ul.LoadAligned(ref bTempA) >> (64 - per50));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bB, (Vector2ul) (((Vector4ui) Vector2ul.LoadAligned(ref bB)).Shuffle(XYZWtoZWXY)));
@@ -687,8 +696,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bB) + Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << 42 | Vector2ul.LoadAligned(ref bTempB) >> (64 - 42));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << 11 | Vector2ul.LoadAligned(ref bTempA) >> (64 - 11));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << per61 | Vector2ul.LoadAligned(ref bTempB) >> (64 - per61));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << per60 | Vector2ul.LoadAligned(ref bTempA) >> (64 - per60));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bB, (Vector2ul) (((Vector4ui) Vector2ul.LoadAligned(ref bB)).Shuffle(XYZWtoZWXY)));
@@ -696,8 +705,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bB) + Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << 50 | Vector2ul.LoadAligned(ref bTempB) >> (64 - 50));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << 59 | Vector2ul.LoadAligned(ref bTempA) >> (64 - 59));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << per71 | Vector2ul.LoadAligned(ref bTempB) >> (64 - per71));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << per70 | Vector2ul.LoadAligned(ref bTempA) >> (64 - per70));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bB, (Vector2ul) (((Vector4ui) Vector2ul.LoadAligned(ref bB)).Shuffle(XYZWtoZWXY)));
@@ -708,8 +717,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bB) + Vector2ul.LoadAligned(ref bA) + Vector2ul.LoadAligned(ref k1) + Vector2ul.LoadAligned(ref t2l));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << 56 | Vector2ul.LoadAligned(ref bTempB) >> (64 - 56));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) <<  5 | Vector2ul.LoadAligned(ref bTempA) >> (64 -  5));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << per01 | Vector2ul.LoadAligned(ref bTempB) >> (64 - per01));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << per00 | Vector2ul.LoadAligned(ref bTempA) >> (64 - per00));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bB, (Vector2ul) (((Vector4ui) Vector2ul.LoadAligned(ref bB)).Shuffle(XYZWtoZWXY)));
@@ -717,8 +726,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bB) + Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << 28 | Vector2ul.LoadAligned(ref bTempB) >> (64 - 28));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << 36 | Vector2ul.LoadAligned(ref bTempA) >> (64 - 36));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << per11 | Vector2ul.LoadAligned(ref bTempB) >> (64 - per11));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << per10 | Vector2ul.LoadAligned(ref bTempA) >> (64 - per10));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bB, (Vector2ul) (((Vector4ui) Vector2ul.LoadAligned(ref bB)).Shuffle(XYZWtoZWXY)));
@@ -726,8 +735,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bB) + Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << 46 | Vector2ul.LoadAligned(ref bTempB) >> (64 - 46));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << 13 | Vector2ul.LoadAligned(ref bTempA) >> (64 - 13));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << per21 | Vector2ul.LoadAligned(ref bTempB) >> (64 - per21));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << per20 | Vector2ul.LoadAligned(ref bTempA) >> (64 - per20));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bB, (Vector2ul) (((Vector4ui) Vector2ul.LoadAligned(ref bB)).Shuffle(XYZWtoZWXY)));
@@ -735,8 +744,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bB) + Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << 44 | Vector2ul.LoadAligned(ref bTempB) >> (64 - 44));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << 58 | Vector2ul.LoadAligned(ref bTempA) >> (64 - 58));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << per31 | Vector2ul.LoadAligned(ref bTempB) >> (64 - per31));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << per30 | Vector2ul.LoadAligned(ref bTempA) >> (64 - per30));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bB, (Vector2ul) (((Vector4ui) Vector2ul.LoadAligned(ref bB)).Shuffle(XYZWtoZWXY)));
@@ -747,8 +756,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bB) + Vector2ul.LoadAligned(ref bA) + Vector2ul.LoadAligned(ref k2) + Vector2ul.LoadAligned(ref t0l));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << 20 | Vector2ul.LoadAligned(ref bTempB) >> (64 - 20));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << 26 | Vector2ul.LoadAligned(ref bTempA) >> (64 - 26));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << per41 | Vector2ul.LoadAligned(ref bTempB) >> (64 - per41));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << per40 | Vector2ul.LoadAligned(ref bTempA) >> (64 - per40));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bB, (Vector2ul) (((Vector4ui) Vector2ul.LoadAligned(ref bB)).Shuffle(XYZWtoZWXY)));
@@ -756,8 +765,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bB) + Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << 35 | Vector2ul.LoadAligned(ref bTempB) >> (64 - 35));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << 53 | Vector2ul.LoadAligned(ref bTempA) >> (64 - 53));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << per51 | Vector2ul.LoadAligned(ref bTempB) >> (64 - per51));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << per50 | Vector2ul.LoadAligned(ref bTempA) >> (64 - per50));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bB, (Vector2ul) (((Vector4ui) Vector2ul.LoadAligned(ref bB)).Shuffle(XYZWtoZWXY)));
@@ -765,8 +774,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bB) + Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << 42 | Vector2ul.LoadAligned(ref bTempB) >> (64 - 42));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << 11 | Vector2ul.LoadAligned(ref bTempA) >> (64 - 11));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << per61 | Vector2ul.LoadAligned(ref bTempB) >> (64 - per61));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << per60 | Vector2ul.LoadAligned(ref bTempA) >> (64 - per60));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bB, (Vector2ul) (((Vector4ui) Vector2ul.LoadAligned(ref bB)).Shuffle(XYZWtoZWXY)));
@@ -774,8 +783,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bB) + Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << 50 | Vector2ul.LoadAligned(ref bTempB) >> (64 - 50));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << 59 | Vector2ul.LoadAligned(ref bTempA) >> (64 - 59));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) << per71 | Vector2ul.LoadAligned(ref bTempB) >> (64 - per71));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) << per70 | Vector2ul.LoadAligned(ref bTempA) >> (64 - per70));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bB, (Vector2ul) (((Vector4ui) Vector2ul.LoadAligned(ref bB)).Shuffle(XYZWtoZWXY)));
@@ -844,8 +853,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> 50 | Vector2ul.LoadAligned(ref bTempB) << (64 - 50));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> 59 | Vector2ul.LoadAligned(ref bTempA) << (64 - 59));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> per71 | Vector2ul.LoadAligned(ref bTempB) << (64 - per71));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> per70 | Vector2ul.LoadAligned(ref bTempA) << (64 - per70));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bA) - Vector2ul.LoadAligned(ref bB));
 			// Round 71
@@ -853,8 +862,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> 42 | Vector2ul.LoadAligned(ref bTempB) << (64 - 42));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> 11 | Vector2ul.LoadAligned(ref bTempA) << (64 - 11));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> per61 | Vector2ul.LoadAligned(ref bTempB) << (64 - per61));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> per60 | Vector2ul.LoadAligned(ref bTempA) << (64 - per60));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bA) - Vector2ul.LoadAligned(ref bB));
 			// Round 70
@@ -862,8 +871,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> 35 | Vector2ul.LoadAligned(ref bTempB) << (64 - 35));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> 53 | Vector2ul.LoadAligned(ref bTempA) << (64 - 53));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> per51 | Vector2ul.LoadAligned(ref bTempB) << (64 - per51));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> per50 | Vector2ul.LoadAligned(ref bTempA) << (64 - per50));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bA) - Vector2ul.LoadAligned(ref bB));
 			// Round 69, Subkey 17
@@ -871,8 +880,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> 20 | Vector2ul.LoadAligned(ref bTempB) << (64 - 20));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> 26 | Vector2ul.LoadAligned(ref bTempA) << (64 - 26));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> per41 | Vector2ul.LoadAligned(ref bTempB) << (64 - per41));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> per40 | Vector2ul.LoadAligned(ref bTempA) << (64 - per40));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bA) - Vector2ul.LoadAligned(ref k2) - Vector2ul.LoadAligned(ref t0l) - Vector2ul.LoadAligned(ref bB));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) - Vector2ul.LoadAligned(ref k3) - Vector2ul.LoadAligned(ref t2h) - Vector2ul.LoadAligned(ref subkey));
@@ -883,8 +892,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> 44 | Vector2ul.LoadAligned(ref bTempB) << (64 - 44));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> 58 | Vector2ul.LoadAligned(ref bTempA) << (64 - 58));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> per31 | Vector2ul.LoadAligned(ref bTempB) << (64 - per31));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> per30 | Vector2ul.LoadAligned(ref bTempA) << (64 - per30));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bA) - Vector2ul.LoadAligned(ref bB));
 			// Round 67
@@ -892,8 +901,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> 46 | Vector2ul.LoadAligned(ref bTempB) << (64 - 46));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> 13 | Vector2ul.LoadAligned(ref bTempA) << (64 - 13));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> per21 | Vector2ul.LoadAligned(ref bTempB) << (64 - per21));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> per20 | Vector2ul.LoadAligned(ref bTempA) << (64 - per20));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bA) - Vector2ul.LoadAligned(ref bB));
 			// Round 66
@@ -901,8 +910,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> 28 | Vector2ul.LoadAligned(ref bTempB) << (64 - 28));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> 36 | Vector2ul.LoadAligned(ref bTempA) << (64 - 36));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> per11 | Vector2ul.LoadAligned(ref bTempB) << (64 - per11));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> per10 | Vector2ul.LoadAligned(ref bTempA) << (64 - per10));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bA) - Vector2ul.LoadAligned(ref bB));
 			// Round 65, Subkey 16
@@ -910,8 +919,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> 56 | Vector2ul.LoadAligned(ref bTempB) << (64 - 56));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >>  5 | Vector2ul.LoadAligned(ref bTempA) << (64 -  5));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> per01 | Vector2ul.LoadAligned(ref bTempB) << (64 - per01));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> per00 | Vector2ul.LoadAligned(ref bTempA) << (64 - per00));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bA) - Vector2ul.LoadAligned(ref k1) - Vector2ul.LoadAligned(ref t2l) - Vector2ul.LoadAligned(ref bB));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) - Vector2ul.LoadAligned(ref k2) - Vector2ul.LoadAligned(ref t1h) - Vector2ul.LoadAligned(ref subkey));
@@ -922,8 +931,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> 50 | Vector2ul.LoadAligned(ref bTempB) << (64 - 50));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> 59 | Vector2ul.LoadAligned(ref bTempA) << (64 - 59));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> per71 | Vector2ul.LoadAligned(ref bTempB) << (64 - per71));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> per70 | Vector2ul.LoadAligned(ref bTempA) << (64 - per70));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bA) - Vector2ul.LoadAligned(ref bB));
 			// Round 63
@@ -931,8 +940,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> 42 | Vector2ul.LoadAligned(ref bTempB) << (64 - 42));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> 11 | Vector2ul.LoadAligned(ref bTempA) << (64 - 11));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> per61 | Vector2ul.LoadAligned(ref bTempB) << (64 - per61));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> per60 | Vector2ul.LoadAligned(ref bTempA) << (64 - per60));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bA) - Vector2ul.LoadAligned(ref bB));
 			// Round 62
@@ -940,8 +949,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> 35 | Vector2ul.LoadAligned(ref bTempB) << (64 - 35));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> 53 | Vector2ul.LoadAligned(ref bTempA) << (64 - 53));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> per51 | Vector2ul.LoadAligned(ref bTempB) << (64 - per51));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> per50 | Vector2ul.LoadAligned(ref bTempA) << (64 - per50));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bA) - Vector2ul.LoadAligned(ref bB));
 			// Round 61, Subkey 15
@@ -949,8 +958,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> 20 | Vector2ul.LoadAligned(ref bTempB) << (64 - 20));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> 26 | Vector2ul.LoadAligned(ref bTempA) << (64 - 26));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> per41 | Vector2ul.LoadAligned(ref bTempB) << (64 - per41));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> per40 | Vector2ul.LoadAligned(ref bTempA) << (64 - per40));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bA) - Vector2ul.LoadAligned(ref k0) - Vector2ul.LoadAligned(ref t1l) - Vector2ul.LoadAligned(ref bB));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) - Vector2ul.LoadAligned(ref k1) - Vector2ul.LoadAligned(ref t0h) - Vector2ul.LoadAligned(ref subkey));
@@ -961,8 +970,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> 44 | Vector2ul.LoadAligned(ref bTempB) << (64 - 44));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> 58 | Vector2ul.LoadAligned(ref bTempA) << (64 - 58));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> per31 | Vector2ul.LoadAligned(ref bTempB) << (64 - per31));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> per30 | Vector2ul.LoadAligned(ref bTempA) << (64 - per30));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bA) - Vector2ul.LoadAligned(ref bB));
 			// Round 59
@@ -970,8 +979,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> 46 | Vector2ul.LoadAligned(ref bTempB) << (64 - 46));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> 13 | Vector2ul.LoadAligned(ref bTempA) << (64 - 13));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> per21 | Vector2ul.LoadAligned(ref bTempB) << (64 - per21));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> per20 | Vector2ul.LoadAligned(ref bTempA) << (64 - per20));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bA) - Vector2ul.LoadAligned(ref bB));
 			// Round 58
@@ -979,8 +988,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> 28 | Vector2ul.LoadAligned(ref bTempB) << (64 - 28));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> 36 | Vector2ul.LoadAligned(ref bTempA) << (64 - 36));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> per11 | Vector2ul.LoadAligned(ref bTempB) << (64 - per11));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> per10 | Vector2ul.LoadAligned(ref bTempA) << (64 - per10));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bA) - Vector2ul.LoadAligned(ref bB));
 			// Round 57, Subkey 14
@@ -988,8 +997,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> 56 | Vector2ul.LoadAligned(ref bTempB) << (64 - 56));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >>  5 | Vector2ul.LoadAligned(ref bTempA) << (64 -  5));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> per01 | Vector2ul.LoadAligned(ref bTempB) << (64 - per01));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> per00 | Vector2ul.LoadAligned(ref bTempA) << (64 - per00));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bA) - Vector2ul.LoadAligned(ref k4) - Vector2ul.LoadAligned(ref t0l) - Vector2ul.LoadAligned(ref bB));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) - Vector2ul.LoadAligned(ref k0) - Vector2ul.LoadAligned(ref t2h) - Vector2ul.LoadAligned(ref subkey));
@@ -1000,8 +1009,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> 50 | Vector2ul.LoadAligned(ref bTempB) << (64 - 50));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> 59 | Vector2ul.LoadAligned(ref bTempA) << (64 - 59));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> per71 | Vector2ul.LoadAligned(ref bTempB) << (64 - per71));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> per70 | Vector2ul.LoadAligned(ref bTempA) << (64 - per70));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bA) - Vector2ul.LoadAligned(ref bB));
 			// Round 55
@@ -1009,8 +1018,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> 42 | Vector2ul.LoadAligned(ref bTempB) << (64 - 42));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> 11 | Vector2ul.LoadAligned(ref bTempA) << (64 - 11));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> per61 | Vector2ul.LoadAligned(ref bTempB) << (64 - per61));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> per60 | Vector2ul.LoadAligned(ref bTempA) << (64 - per60));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bA) - Vector2ul.LoadAligned(ref bB));
 			// Round 54
@@ -1018,8 +1027,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> 35 | Vector2ul.LoadAligned(ref bTempB) << (64 - 35));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> 53 | Vector2ul.LoadAligned(ref bTempA) << (64 - 53));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> per51 | Vector2ul.LoadAligned(ref bTempB) << (64 - per51));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> per50 | Vector2ul.LoadAligned(ref bTempA) << (64 - per50));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bA) - Vector2ul.LoadAligned(ref bB));
 			// Round 53, Subkey 13
@@ -1027,8 +1036,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> 20 | Vector2ul.LoadAligned(ref bTempB) << (64 - 20));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> 26 | Vector2ul.LoadAligned(ref bTempA) << (64 - 26));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> per41 | Vector2ul.LoadAligned(ref bTempB) << (64 - per41));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> per40 | Vector2ul.LoadAligned(ref bTempA) << (64 - per40));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bA) - Vector2ul.LoadAligned(ref k3) - Vector2ul.LoadAligned(ref t2l) - Vector2ul.LoadAligned(ref bB));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) - Vector2ul.LoadAligned(ref k4) - Vector2ul.LoadAligned(ref t1h) - Vector2ul.LoadAligned(ref subkey));
@@ -1039,8 +1048,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> 44 | Vector2ul.LoadAligned(ref bTempB) << (64 - 44));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> 58 | Vector2ul.LoadAligned(ref bTempA) << (64 - 58));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> per31 | Vector2ul.LoadAligned(ref bTempB) << (64 - per31));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> per30 | Vector2ul.LoadAligned(ref bTempA) << (64 - per30));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bA) - Vector2ul.LoadAligned(ref bB));
 			// Round 51
@@ -1048,8 +1057,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> 46 | Vector2ul.LoadAligned(ref bTempB) << (64 - 46));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> 13 | Vector2ul.LoadAligned(ref bTempA) << (64 - 13));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> per21 | Vector2ul.LoadAligned(ref bTempB) << (64 - per21));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> per20 | Vector2ul.LoadAligned(ref bTempA) << (64 - per20));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bA) - Vector2ul.LoadAligned(ref bB));
 			// Round 50
@@ -1057,8 +1066,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> 28 | Vector2ul.LoadAligned(ref bTempB) << (64 - 28));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> 36 | Vector2ul.LoadAligned(ref bTempA) << (64 - 36));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> per11 | Vector2ul.LoadAligned(ref bTempB) << (64 - per11));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> per10 | Vector2ul.LoadAligned(ref bTempA) << (64 - per10));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bA) - Vector2ul.LoadAligned(ref bB));
 			// Round 49, Subkey 12
@@ -1066,8 +1075,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> 56 | Vector2ul.LoadAligned(ref bTempB) << (64 - 56));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >>  5 | Vector2ul.LoadAligned(ref bTempA) << (64 -  5));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> per01 | Vector2ul.LoadAligned(ref bTempB) << (64 - per01));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> per00 | Vector2ul.LoadAligned(ref bTempA) << (64 - per00));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bA) - Vector2ul.LoadAligned(ref k2) - Vector2ul.LoadAligned(ref t1l) - Vector2ul.LoadAligned(ref bB));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) - Vector2ul.LoadAligned(ref k3) - Vector2ul.LoadAligned(ref t0h) - Vector2ul.LoadAligned(ref subkey));
@@ -1078,8 +1087,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> 50 | Vector2ul.LoadAligned(ref bTempB) << (64 - 50));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> 59 | Vector2ul.LoadAligned(ref bTempA) << (64 - 59));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> per71 | Vector2ul.LoadAligned(ref bTempB) << (64 - per71));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> per70 | Vector2ul.LoadAligned(ref bTempA) << (64 - per70));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bA) - Vector2ul.LoadAligned(ref bB));
 			// Round 47
@@ -1087,8 +1096,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> 42 | Vector2ul.LoadAligned(ref bTempB) << (64 - 42));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> 11 | Vector2ul.LoadAligned(ref bTempA) << (64 - 11));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> per61 | Vector2ul.LoadAligned(ref bTempB) << (64 - per61));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> per60 | Vector2ul.LoadAligned(ref bTempA) << (64 - per60));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bA) - Vector2ul.LoadAligned(ref bB));
 			// Round 46
@@ -1096,8 +1105,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> 35 | Vector2ul.LoadAligned(ref bTempB) << (64 - 35));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> 53 | Vector2ul.LoadAligned(ref bTempA) << (64 - 53));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> per51 | Vector2ul.LoadAligned(ref bTempB) << (64 - per51));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> per50 | Vector2ul.LoadAligned(ref bTempA) << (64 - per50));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bA) - Vector2ul.LoadAligned(ref bB));
 			// Round 45, Subkey 11
@@ -1105,8 +1114,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> 20 | Vector2ul.LoadAligned(ref bTempB) << (64 - 20));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> 26 | Vector2ul.LoadAligned(ref bTempA) << (64 - 26));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> per41 | Vector2ul.LoadAligned(ref bTempB) << (64 - per41));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> per40 | Vector2ul.LoadAligned(ref bTempA) << (64 - per40));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bA) - Vector2ul.LoadAligned(ref k1) - Vector2ul.LoadAligned(ref t0l) - Vector2ul.LoadAligned(ref bB));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) - Vector2ul.LoadAligned(ref k2) - Vector2ul.LoadAligned(ref t2h) - Vector2ul.LoadAligned(ref subkey));
@@ -1117,8 +1126,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> 44 | Vector2ul.LoadAligned(ref bTempB) << (64 - 44));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> 58 | Vector2ul.LoadAligned(ref bTempA) << (64 - 58));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> per31 | Vector2ul.LoadAligned(ref bTempB) << (64 - per31));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> per30 | Vector2ul.LoadAligned(ref bTempA) << (64 - per30));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bA) - Vector2ul.LoadAligned(ref bB));
 			// Round 43
@@ -1126,8 +1135,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> 46 | Vector2ul.LoadAligned(ref bTempB) << (64 - 46));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> 13 | Vector2ul.LoadAligned(ref bTempA) << (64 - 13));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> per21 | Vector2ul.LoadAligned(ref bTempB) << (64 - per21));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> per20 | Vector2ul.LoadAligned(ref bTempA) << (64 - per20));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bA) - Vector2ul.LoadAligned(ref bB));
 			// Round 42
@@ -1135,8 +1144,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> 28 | Vector2ul.LoadAligned(ref bTempB) << (64 - 28));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> 36 | Vector2ul.LoadAligned(ref bTempA) << (64 - 36));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> per11 | Vector2ul.LoadAligned(ref bTempB) << (64 - per11));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> per10 | Vector2ul.LoadAligned(ref bTempA) << (64 - per10));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bA) - Vector2ul.LoadAligned(ref bB));
 			// Round 41, Subkey 10
@@ -1144,8 +1153,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> 56 | Vector2ul.LoadAligned(ref bTempB) << (64 - 56));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >>  5 | Vector2ul.LoadAligned(ref bTempA) << (64 -  5));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> per01 | Vector2ul.LoadAligned(ref bTempB) << (64 - per01));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> per00 | Vector2ul.LoadAligned(ref bTempA) << (64 - per00));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bA) - Vector2ul.LoadAligned(ref k0) - Vector2ul.LoadAligned(ref t2l) - Vector2ul.LoadAligned(ref bB));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) - Vector2ul.LoadAligned(ref k1) - Vector2ul.LoadAligned(ref t1h) - Vector2ul.LoadAligned(ref subkey));
@@ -1156,8 +1165,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> 50 | Vector2ul.LoadAligned(ref bTempB) << (64 - 50));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> 59 | Vector2ul.LoadAligned(ref bTempA) << (64 - 59));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> per71 | Vector2ul.LoadAligned(ref bTempB) << (64 - per71));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> per70 | Vector2ul.LoadAligned(ref bTempA) << (64 - per70));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bA) - Vector2ul.LoadAligned(ref bB));
 			// Round 39
@@ -1165,8 +1174,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> 42 | Vector2ul.LoadAligned(ref bTempB) << (64 - 42));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> 11 | Vector2ul.LoadAligned(ref bTempA) << (64 - 11));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> per61 | Vector2ul.LoadAligned(ref bTempB) << (64 - per61));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> per60 | Vector2ul.LoadAligned(ref bTempA) << (64 - per60));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bA) - Vector2ul.LoadAligned(ref bB));
 			// Round 38
@@ -1174,8 +1183,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> 35 | Vector2ul.LoadAligned(ref bTempB) << (64 - 35));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> 53 | Vector2ul.LoadAligned(ref bTempA) << (64 - 53));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> per51 | Vector2ul.LoadAligned(ref bTempB) << (64 - per51));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> per50 | Vector2ul.LoadAligned(ref bTempA) << (64 - per50));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bA) - Vector2ul.LoadAligned(ref bB));
 			// Round 37, Subkey 9
@@ -1183,8 +1192,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> 20 | Vector2ul.LoadAligned(ref bTempB) << (64 - 20));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> 26 | Vector2ul.LoadAligned(ref bTempA) << (64 - 26));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> per41 | Vector2ul.LoadAligned(ref bTempB) << (64 - per41));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> per40 | Vector2ul.LoadAligned(ref bTempA) << (64 - per40));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bA) - Vector2ul.LoadAligned(ref k4) - Vector2ul.LoadAligned(ref t1l) - Vector2ul.LoadAligned(ref bB));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) - Vector2ul.LoadAligned(ref k0) - Vector2ul.LoadAligned(ref t0h) - Vector2ul.LoadAligned(ref subkey));
@@ -1195,8 +1204,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> 44 | Vector2ul.LoadAligned(ref bTempB) << (64 - 44));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> 58 | Vector2ul.LoadAligned(ref bTempA) << (64 - 58));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> per31 | Vector2ul.LoadAligned(ref bTempB) << (64 - per31));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> per30 | Vector2ul.LoadAligned(ref bTempA) << (64 - per30));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bA) - Vector2ul.LoadAligned(ref bB));
 			// Round 35
@@ -1204,8 +1213,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> 46 | Vector2ul.LoadAligned(ref bTempB) << (64 - 46));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> 13 | Vector2ul.LoadAligned(ref bTempA) << (64 - 13));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> per21 | Vector2ul.LoadAligned(ref bTempB) << (64 - per21));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> per20 | Vector2ul.LoadAligned(ref bTempA) << (64 - per20));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bA) - Vector2ul.LoadAligned(ref bB));
 			// Round 34
@@ -1213,8 +1222,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> 28 | Vector2ul.LoadAligned(ref bTempB) << (64 - 28));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> 36 | Vector2ul.LoadAligned(ref bTempA) << (64 - 36));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> per11 | Vector2ul.LoadAligned(ref bTempB) << (64 - per11));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> per10 | Vector2ul.LoadAligned(ref bTempA) << (64 - per10));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bA) - Vector2ul.LoadAligned(ref bB));
 			// Round 33, Subkey 8
@@ -1222,8 +1231,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> 56 | Vector2ul.LoadAligned(ref bTempB) << (64 - 56));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >>  5 | Vector2ul.LoadAligned(ref bTempA) << (64 -  5));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> per01 | Vector2ul.LoadAligned(ref bTempB) << (64 - per01));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> per00 | Vector2ul.LoadAligned(ref bTempA) << (64 - per00));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bA) - Vector2ul.LoadAligned(ref k3) - Vector2ul.LoadAligned(ref t0l) - Vector2ul.LoadAligned(ref bB));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) - Vector2ul.LoadAligned(ref k4) - Vector2ul.LoadAligned(ref t2h) - Vector2ul.LoadAligned(ref subkey));
@@ -1234,8 +1243,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> 50 | Vector2ul.LoadAligned(ref bTempB) << (64 - 50));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> 59 | Vector2ul.LoadAligned(ref bTempA) << (64 - 59));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> per71 | Vector2ul.LoadAligned(ref bTempB) << (64 - per71));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> per70 | Vector2ul.LoadAligned(ref bTempA) << (64 - per70));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bA) - Vector2ul.LoadAligned(ref bB));
 			// Round 31
@@ -1243,8 +1252,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> 42 | Vector2ul.LoadAligned(ref bTempB) << (64 - 42));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> 11 | Vector2ul.LoadAligned(ref bTempA) << (64 - 11));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> per61 | Vector2ul.LoadAligned(ref bTempB) << (64 - per61));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> per60 | Vector2ul.LoadAligned(ref bTempA) << (64 - per60));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bA) - Vector2ul.LoadAligned(ref bB));
 			// Round 30
@@ -1252,8 +1261,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> 35 | Vector2ul.LoadAligned(ref bTempB) << (64 - 35));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> 53 | Vector2ul.LoadAligned(ref bTempA) << (64 - 53));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> per51 | Vector2ul.LoadAligned(ref bTempB) << (64 - per51));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> per50 | Vector2ul.LoadAligned(ref bTempA) << (64 - per50));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bA) - Vector2ul.LoadAligned(ref bB));
 			// Round 29, Subkey 7
@@ -1261,8 +1270,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> 20 | Vector2ul.LoadAligned(ref bTempB) << (64 - 20));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> 26 | Vector2ul.LoadAligned(ref bTempA) << (64 - 26));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> per41 | Vector2ul.LoadAligned(ref bTempB) << (64 - per41));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> per40 | Vector2ul.LoadAligned(ref bTempA) << (64 - per40));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bA) - Vector2ul.LoadAligned(ref k2) - Vector2ul.LoadAligned(ref t2l) - Vector2ul.LoadAligned(ref bB));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) - Vector2ul.LoadAligned(ref k3) - Vector2ul.LoadAligned(ref t1h) - Vector2ul.LoadAligned(ref subkey));
@@ -1273,8 +1282,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> 44 | Vector2ul.LoadAligned(ref bTempB) << (64 - 44));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> 58 | Vector2ul.LoadAligned(ref bTempA) << (64 - 58));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> per31 | Vector2ul.LoadAligned(ref bTempB) << (64 - per31));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> per30 | Vector2ul.LoadAligned(ref bTempA) << (64 - per30));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bA) - Vector2ul.LoadAligned(ref bB));
 			// Round 27
@@ -1282,8 +1291,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> 46 | Vector2ul.LoadAligned(ref bTempB) << (64 - 46));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> 13 | Vector2ul.LoadAligned(ref bTempA) << (64 - 13));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> per21 | Vector2ul.LoadAligned(ref bTempB) << (64 - per21));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> per20 | Vector2ul.LoadAligned(ref bTempA) << (64 - per20));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bA) - Vector2ul.LoadAligned(ref bB));
 			// Round 26
@@ -1291,8 +1300,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> 28 | Vector2ul.LoadAligned(ref bTempB) << (64 - 28));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> 36 | Vector2ul.LoadAligned(ref bTempA) << (64 - 36));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> per11 | Vector2ul.LoadAligned(ref bTempB) << (64 - per11));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> per10 | Vector2ul.LoadAligned(ref bTempA) << (64 - per10));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bA) - Vector2ul.LoadAligned(ref bB));
 			// Round 25, Subkey 6
@@ -1300,8 +1309,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> 56 | Vector2ul.LoadAligned(ref bTempB) << (64 - 56));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >>  5 | Vector2ul.LoadAligned(ref bTempA) << (64 -  5));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> per01 | Vector2ul.LoadAligned(ref bTempB) << (64 - per01));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> per00 | Vector2ul.LoadAligned(ref bTempA) << (64 - per00));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bA) - Vector2ul.LoadAligned(ref k1) - Vector2ul.LoadAligned(ref t1l) - Vector2ul.LoadAligned(ref bB));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) - Vector2ul.LoadAligned(ref k2) - Vector2ul.LoadAligned(ref t0h) - Vector2ul.LoadAligned(ref subkey));
@@ -1312,8 +1321,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> 50 | Vector2ul.LoadAligned(ref bTempB) << (64 - 50));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> 59 | Vector2ul.LoadAligned(ref bTempA) << (64 - 59));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> per71 | Vector2ul.LoadAligned(ref bTempB) << (64 - per71));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> per70 | Vector2ul.LoadAligned(ref bTempA) << (64 - per70));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bA) - Vector2ul.LoadAligned(ref bB));
 			// Round 23
@@ -1321,8 +1330,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> 42 | Vector2ul.LoadAligned(ref bTempB) << (64 - 42));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> 11 | Vector2ul.LoadAligned(ref bTempA) << (64 - 11));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> per61 | Vector2ul.LoadAligned(ref bTempB) << (64 - per61));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> per60 | Vector2ul.LoadAligned(ref bTempA) << (64 - per60));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bA) - Vector2ul.LoadAligned(ref bB));
 			// Round 22
@@ -1330,8 +1339,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> 35 | Vector2ul.LoadAligned(ref bTempB) << (64 - 35));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> 53 | Vector2ul.LoadAligned(ref bTempA) << (64 - 53));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> per51 | Vector2ul.LoadAligned(ref bTempB) << (64 - per51));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> per50 | Vector2ul.LoadAligned(ref bTempA) << (64 - per50));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bA) - Vector2ul.LoadAligned(ref bB));
 			// Round 21, Subkey 5
@@ -1339,8 +1348,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> 20 | Vector2ul.LoadAligned(ref bTempB) << (64 - 20));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> 26 | Vector2ul.LoadAligned(ref bTempA) << (64 - 26));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> per41 | Vector2ul.LoadAligned(ref bTempB) << (64 - per41));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> per40 | Vector2ul.LoadAligned(ref bTempA) << (64 - per40));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bA) - Vector2ul.LoadAligned(ref k0) - Vector2ul.LoadAligned(ref t0l) - Vector2ul.LoadAligned(ref bB));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) - Vector2ul.LoadAligned(ref k1) - Vector2ul.LoadAligned(ref t2h) - Vector2ul.LoadAligned(ref subkey));
@@ -1351,8 +1360,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> 44 | Vector2ul.LoadAligned(ref bTempB) << (64 - 44));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> 58 | Vector2ul.LoadAligned(ref bTempA) << (64 - 58));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> per31 | Vector2ul.LoadAligned(ref bTempB) << (64 - per31));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> per30 | Vector2ul.LoadAligned(ref bTempA) << (64 - per30));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bA) - Vector2ul.LoadAligned(ref bB));
 			// Round 19
@@ -1360,8 +1369,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> 46 | Vector2ul.LoadAligned(ref bTempB) << (64 - 46));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> 13 | Vector2ul.LoadAligned(ref bTempA) << (64 - 13));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> per21 | Vector2ul.LoadAligned(ref bTempB) << (64 - per21));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> per20 | Vector2ul.LoadAligned(ref bTempA) << (64 - per20));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bA) - Vector2ul.LoadAligned(ref bB));
 			// Round 18
@@ -1369,8 +1378,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> 28 | Vector2ul.LoadAligned(ref bTempB) << (64 - 28));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> 36 | Vector2ul.LoadAligned(ref bTempA) << (64 - 36));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> per11 | Vector2ul.LoadAligned(ref bTempB) << (64 - per11));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> per10 | Vector2ul.LoadAligned(ref bTempA) << (64 - per10));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bA) - Vector2ul.LoadAligned(ref bB));
 			// Round 17, Subkey 4
@@ -1378,8 +1387,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> 56 | Vector2ul.LoadAligned(ref bTempB) << (64 - 56));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >>  5 | Vector2ul.LoadAligned(ref bTempA) << (64 -  5));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> per01 | Vector2ul.LoadAligned(ref bTempB) << (64 - per01));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> per00 | Vector2ul.LoadAligned(ref bTempA) << (64 - per00));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bA) - Vector2ul.LoadAligned(ref k4) - Vector2ul.LoadAligned(ref t2l) - Vector2ul.LoadAligned(ref bB));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) - Vector2ul.LoadAligned(ref k0) - Vector2ul.LoadAligned(ref t1h) - Vector2ul.LoadAligned(ref subkey));
@@ -1390,8 +1399,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> 50 | Vector2ul.LoadAligned(ref bTempB) << (64 - 50));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> 59 | Vector2ul.LoadAligned(ref bTempA) << (64 - 59));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> per71 | Vector2ul.LoadAligned(ref bTempB) << (64 - per71));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> per70 | Vector2ul.LoadAligned(ref bTempA) << (64 - per70));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bA) - Vector2ul.LoadAligned(ref bB));
 			// Round 15
@@ -1399,8 +1408,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> 42 | Vector2ul.LoadAligned(ref bTempB) << (64 - 42));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> 11 | Vector2ul.LoadAligned(ref bTempA) << (64 - 11));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> per61 | Vector2ul.LoadAligned(ref bTempB) << (64 - per61));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> per60 | Vector2ul.LoadAligned(ref bTempA) << (64 - per60));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bA) - Vector2ul.LoadAligned(ref bB));
 			// Round 14
@@ -1408,8 +1417,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> 35 | Vector2ul.LoadAligned(ref bTempB) << (64 - 35));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> 53 | Vector2ul.LoadAligned(ref bTempA) << (64 - 53));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> per51 | Vector2ul.LoadAligned(ref bTempB) << (64 - per51));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> per50 | Vector2ul.LoadAligned(ref bTempA) << (64 - per50));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bA) - Vector2ul.LoadAligned(ref bB));
 			// Round 13, Subkey 3
@@ -1417,8 +1426,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> 20 | Vector2ul.LoadAligned(ref bTempB) << (64 - 20));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> 26 | Vector2ul.LoadAligned(ref bTempA) << (64 - 26));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> per41 | Vector2ul.LoadAligned(ref bTempB) << (64 - per41));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> per40 | Vector2ul.LoadAligned(ref bTempA) << (64 - per40));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bA) - Vector2ul.LoadAligned(ref k3) - Vector2ul.LoadAligned(ref t1l) - Vector2ul.LoadAligned(ref bB));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) - Vector2ul.LoadAligned(ref k4) - Vector2ul.LoadAligned(ref t0h) - Vector2ul.LoadAligned(ref subkey));
@@ -1429,8 +1438,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> 44 | Vector2ul.LoadAligned(ref bTempB) << (64 - 44));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> 58 | Vector2ul.LoadAligned(ref bTempA) << (64 - 58));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> per31 | Vector2ul.LoadAligned(ref bTempB) << (64 - per31));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> per30 | Vector2ul.LoadAligned(ref bTempA) << (64 - per30));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bA) - Vector2ul.LoadAligned(ref bB));
 			// Round 11
@@ -1438,8 +1447,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> 46 | Vector2ul.LoadAligned(ref bTempB) << (64 - 46));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> 13 | Vector2ul.LoadAligned(ref bTempA) << (64 - 13));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> per21 | Vector2ul.LoadAligned(ref bTempB) << (64 - per21));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> per20 | Vector2ul.LoadAligned(ref bTempA) << (64 - per20));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bA) - Vector2ul.LoadAligned(ref bB));
 			// Round 10
@@ -1447,8 +1456,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> 28 | Vector2ul.LoadAligned(ref bTempB) << (64 - 28));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> 36 | Vector2ul.LoadAligned(ref bTempA) << (64 - 36));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> per11 | Vector2ul.LoadAligned(ref bTempB) << (64 - per11));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> per10 | Vector2ul.LoadAligned(ref bTempA) << (64 - per10));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bA) - Vector2ul.LoadAligned(ref bB));
 			// Round 9, Subkey 2
@@ -1456,8 +1465,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> 56 | Vector2ul.LoadAligned(ref bTempB) << (64 - 56));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >>  5 | Vector2ul.LoadAligned(ref bTempA) << (64 -  5));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> per01 | Vector2ul.LoadAligned(ref bTempB) << (64 - per01));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> per00 | Vector2ul.LoadAligned(ref bTempA) << (64 - per00));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bA) - Vector2ul.LoadAligned(ref k2) - Vector2ul.LoadAligned(ref t0l) - Vector2ul.LoadAligned(ref bB));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) - Vector2ul.LoadAligned(ref k3) - Vector2ul.LoadAligned(ref t2h) - Vector2ul.LoadAligned(ref subkey));
@@ -1468,8 +1477,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> 50 | Vector2ul.LoadAligned(ref bTempB) << (64 - 50));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> 59 | Vector2ul.LoadAligned(ref bTempA) << (64 - 59));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> per71 | Vector2ul.LoadAligned(ref bTempB) << (64 - per71));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> per70 | Vector2ul.LoadAligned(ref bTempA) << (64 - per70));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bA) - Vector2ul.LoadAligned(ref bB));
 			// Round 7
@@ -1477,8 +1486,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> 42 | Vector2ul.LoadAligned(ref bTempB) << (64 - 42));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> 11 | Vector2ul.LoadAligned(ref bTempA) << (64 - 11));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> per61 | Vector2ul.LoadAligned(ref bTempB) << (64 - per61));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> per60 | Vector2ul.LoadAligned(ref bTempA) << (64 - per60));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bA) - Vector2ul.LoadAligned(ref bB));
 			// Round 6
@@ -1486,8 +1495,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> 35 | Vector2ul.LoadAligned(ref bTempB) << (64 - 35));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> 53 | Vector2ul.LoadAligned(ref bTempA) << (64 - 53));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> per51 | Vector2ul.LoadAligned(ref bTempB) << (64 - per51));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> per50 | Vector2ul.LoadAligned(ref bTempA) << (64 - per50));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bA) - Vector2ul.LoadAligned(ref bB));
 			// Round 5, Subkey 1
@@ -1495,8 +1504,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> 20 | Vector2ul.LoadAligned(ref bTempB) << (64 - 20));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> 26 | Vector2ul.LoadAligned(ref bTempA) << (64 - 26));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> per41 | Vector2ul.LoadAligned(ref bTempB) << (64 - per41));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> per40 | Vector2ul.LoadAligned(ref bTempA) << (64 - per40));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bA) - Vector2ul.LoadAligned(ref k1) - Vector2ul.LoadAligned(ref t2l) - Vector2ul.LoadAligned(ref bB));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) - Vector2ul.LoadAligned(ref k2) - Vector2ul.LoadAligned(ref t1h) - Vector2ul.LoadAligned(ref subkey));
@@ -1507,8 +1516,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> 44 | Vector2ul.LoadAligned(ref bTempB) << (64 - 44));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> 58 | Vector2ul.LoadAligned(ref bTempA) << (64 - 58));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> per31 | Vector2ul.LoadAligned(ref bTempB) << (64 - per31));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> per30 | Vector2ul.LoadAligned(ref bTempA) << (64 - per30));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bA) - Vector2ul.LoadAligned(ref bB));
 			// Round 3
@@ -1516,8 +1525,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> 46 | Vector2ul.LoadAligned(ref bTempB) << (64 - 46));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> 13 | Vector2ul.LoadAligned(ref bTempA) << (64 - 13));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> per21 | Vector2ul.LoadAligned(ref bTempB) << (64 - per21));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> per20 | Vector2ul.LoadAligned(ref bTempA) << (64 - per20));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bA) - Vector2ul.LoadAligned(ref bB));
 			// Round 2
@@ -1525,8 +1534,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> 28 | Vector2ul.LoadAligned(ref bTempB) << (64 - 28));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> 36 | Vector2ul.LoadAligned(ref bTempA) << (64 - 36));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> per11 | Vector2ul.LoadAligned(ref bTempB) << (64 - per11));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> per10 | Vector2ul.LoadAligned(ref bTempA) << (64 - per10));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bA) - Vector2ul.LoadAligned(ref bB));
 			// Round 1, Subkey 0
@@ -1534,8 +1543,8 @@ namespace Xpdm.Security.Cryptography
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) ^ Vector2ul.LoadAligned(ref bA));
 			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bZero).UnpackLow(Vector2ul.LoadAligned(ref bB)));
 			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bZero).UnpackHigh(Vector2ul.LoadAligned(ref bB)));
-			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> 56 | Vector2ul.LoadAligned(ref bTempB) << (64 - 56));
-			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >>  5 | Vector2ul.LoadAligned(ref bTempA) << (64 -  5));
+			Vector2ul.StoreAligned(ref bTempB, Vector2ul.LoadAligned(ref bTempB) >> per01 | Vector2ul.LoadAligned(ref bTempB) << (64 - per01));
+			Vector2ul.StoreAligned(ref bTempA, Vector2ul.LoadAligned(ref bTempA) >> per00 | Vector2ul.LoadAligned(ref bTempA) << (64 - per00));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bTempA).UnpackHigh(Vector2ul.LoadAligned(ref bTempB)));
 			Vector2ul.StoreAligned(ref bA, Vector2ul.LoadAligned(ref bA) - Vector2ul.LoadAligned(ref k0) - Vector2ul.LoadAligned(ref t1l) - Vector2ul.LoadAligned(ref bB));
 			Vector2ul.StoreAligned(ref bB, Vector2ul.LoadAligned(ref bB) - Vector2ul.LoadAligned(ref k1) - Vector2ul.LoadAligned(ref t0h) - Vector2ul.LoadAligned(ref subkey));
